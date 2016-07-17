@@ -61,6 +61,70 @@ initiated after update button is pressed&#xD;
 checks username and passwords for errors before submitting data to database</body>
       </ownedComment>
     </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_suTTkEw0Eeaoz5hRd85ezQ" name="login.jsp">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_K-hw0Ew1Eeaoz5hRd85ezQ" name="username"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_MWd0IEw1Eeaoz5hRd85ezQ" name="password"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_O9rG8Ew1Eeaoz5hRd85ezQ" name="login"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_Vs6mIEw1Eeaoz5hRd85ezQ" name="recoveryLink"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_Xn4eAEw1Eeaoz5hRd85ezQ" name="registrationLink"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_v9InEEw0Eeaoz5hRd85ezQ" name="recovery.jsp">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_gX13wEw1Eeaoz5hRd85ezQ" name="email"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_rSN6oEw1Eeaoz5hRd85ezQ" name="sendEmail"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_xJgTkEw0Eeaoz5hRd85ezQ" name="edit.jsp">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_IULYgEw3Eeaoz5hRd85ezQ" name="password"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_IUN0wEw3Eeaoz5hRd85ezQ" name="confirmPasssword"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_IUPC4Ew3Eeaoz5hRd85ezQ" name="email"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_IUQRAEw3Eeaoz5hRd85ezQ" name="firstName"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_IUSGMEw3Eeaoz5hRd85ezQ" name="lastName"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_IUTUUEw3Eeaoz5hRd85ezQ" name="birthDate">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_IUTUUUw3Eeaoz5hRd85ezQ" annotatedElement="_IUTUUEw3Eeaoz5hRd85ezQ">
+          <body>Format:dd/mm/yyyy</body>
+        </ownedComment>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_IUVJgEw3Eeaoz5hRd85ezQ" name="update">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_IUVJgUw3Eeaoz5hRd85ezQ" annotatedElement="_IUVJgEw3Eeaoz5hRd85ezQ">
+          <body>Email is checked for legitimacy</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_IUVJgkw3Eeaoz5hRd85ezQ" annotatedElement="_IUVJgEw3Eeaoz5hRd85ezQ">
+          <body>Passwords are matched</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_IUVJhEw3Eeaoz5hRd85ezQ" annotatedElement="_IUVJgEw3Eeaoz5hRd85ezQ">
+          <body>Passwords is limited to being above 5 characters</body>
+        </ownedComment>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_3gx-sEw0Eeaoz5hRd85ezQ" name="registration.jsp">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_46PPgEw1Eeaoz5hRd85ezQ" name="username"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_7tIN4Ew1Eeaoz5hRd85ezQ" name="password"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="__-rioEw1Eeaoz5hRd85ezQ" name="confirmPasssword"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_86EiIEw1Eeaoz5hRd85ezQ" name="email"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_-ZXKoEw1Eeaoz5hRd85ezQ" name="firstName"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_DaT8AEw2Eeaoz5hRd85ezQ" name="lastName"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_LiLbAEw2Eeaoz5hRd85ezQ" name="birthDate">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_LiLbAUw2Eeaoz5hRd85ezQ" annotatedElement="_LiLbAEw2Eeaoz5hRd85ezQ">
+          <body>Format:dd/mm/yyyy</body>
+        </ownedComment>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_UHRokEw2Eeaoz5hRd85ezQ" name="register">
+        <ownedComment xmi:type="uml:Comment" xmi:id="_pe9-4Ew2Eeaoz5hRd85ezQ" annotatedElement="_UHRokEw2Eeaoz5hRd85ezQ">
+          <body>Email is checked for legitimacy</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_zGG4QEw2Eeaoz5hRd85ezQ" annotatedElement="_UHRokEw2Eeaoz5hRd85ezQ">
+          <body>Passwords are matched</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_2ADg4Ew2Eeaoz5hRd85ezQ" annotatedElement="_UHRokEw2Eeaoz5hRd85ezQ">
+          <body>Username is checked for uniqueness</body>
+        </ownedComment>
+        <ownedComment xmi:type="uml:Comment" xmi:id="_7k_JEEw2Eeaoz5hRd85ezQ" annotatedElement="_UHRokEw2Eeaoz5hRd85ezQ">
+          <body>Passwords and username is limited to being above 5 characters</body>
+        </ownedComment>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5wpvkEw0Eeaoz5hRd85ezQ" name="welcome.jsp">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_1M-6oEw1Eeaoz5hRd85ezQ" name="editUser"/>
+    </packagedElement>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_uorc8EwxEeaVP9_iDeXZdw" memberEnd="_upCCQEwxEeaVP9_iDeXZdw _upCpUEwxEeaVP9_iDeXZdw">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_uozYwEwxEeaVP9_iDeXZdw" source="org.eclipse.papyrus">
