@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Nk_ZEEE6EeaZIcQloKRC2Q" name="RootElement"/>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Nk_ZEEE6EeaZIcQloKRC2Q" name="RootElement">
+  <packagedElement xmi:type="uml:Actor" xmi:id="_2X8goEwvEeaoz5hRd85ezQ" name="User"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_N4A4sEwwEeaoz5hRd85ezQ" name="Login Module">
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_28eUkEwwEeaoz5hRd85ezQ" name="Login"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_4FHXoEwwEeaoz5hRd85ezQ" name="Recover Password"/>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_5SAokEwwEeaoz5hRd85ezQ" name="Register"/>
+  </packagedElement>
+</uml:Model>
