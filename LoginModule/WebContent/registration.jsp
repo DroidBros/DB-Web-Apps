@@ -18,6 +18,7 @@
 	String usertype = "";
 	
 	Boolean usernameMatches = false;
+	Boolean emailMatches = false;
 	//List<String> usernameList = new ArrayList<String>();
 
 	if (submit != null) {
@@ -35,16 +36,27 @@
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connection = DriverManager.getConnection(connectionURL, "kskdevelopers","mfsiablt");
 			if(!connection.isClosed()){
-				System.out.println("Successfully conneced to " + "MySQL server using TCP/IP...");
+				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+			}else{
+				System.out.println("Could not connect to " + "MySQL server using TCP/IP...");
 			}
 			Statement stmt = connection.createStatement();
 			
 			ResultSet rs = stmt.executeQuery("Select * from users");
 			
+			int resultNum = 0;
 			
 			while(rs.next()){
-				if(username==rs.getString(1)){
+				resultNum++;
+				System.out.println(rs.getString(1) + " is username " + resultNum);
+				if(username.equals(rs.getString(1))){
 					usernameMatches = true;
+					System.out.println("boolean is true now");
+				}
+				System.out.println(rs.getString(3) + " is email " + resultNum);
+				if(email.equals(rs.getString(3))){
+					emailMatches = true;
+					System.out.println("email boolean is true now");
 				}
 			}
 			
@@ -56,11 +68,25 @@
 		
 		if(usernameMatches!= true){
 		
+			System.out.println("boolean is false");
+			
 		if (password.equals(retypepassword)) {
 
 			passwordmessage = "";
+			
+			if(!password.equals("")){
+				
+				passwordmessage = "";
+				
+				if(!email.equals("")){
+					
+					passwordmessage = "";
+				
+				if(emailMatches!=true){
+					
+					passwordmessage = "";
 
-			if (birthdate != null) {
+			if (!birthdate.equals("")) {
 				
 				passwordmessage = "";
 				
@@ -69,9 +95,11 @@
 					Connection connection = null;
 					Class.forName("com.mysql.jdbc.Driver").newInstance();
 					connection = DriverManager.getConnection(connectionURL, "kskdevelopers", "mfsiablt");
-					/*if(!connection.isClosed()){
-						System.out.println("Successfully conneced to " + "MySQL server using TCP/IP...");
-					}*/
+					if(!connection.isClosed()){
+						System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+					}else{
+						System.out.println("Could not connect to " + "MySQL server using TCP/IP...");
+					}
 					Statement stmt = connection.createStatement();
 					String sql = "INSERT INTO users (username, password, first_name, last_name, email, birth_date, user_type) VALUES( '"
 							+ username + "', '" + password + "', '" + firstname + "', '" + lastname + "', '"
@@ -88,12 +116,24 @@
 				passwordmessage = "Date is empty!";
 				
 			}
+				} else{
+					passwordmessage = "somebody is already using that email";
+				}
+				
+				}else{
+					passwordmessage = "email is blank";
+				}
+			
+			} else{
+				passwordmessage = "Password is blank";
+			}
 
 		} else {
 			passwordmessage = "Password did not match!";
 		}
 		}else{
 			passwordmessage = "Username is not original";
+			System.out.println("Boolean is true");
 		}
 	}
 %>
