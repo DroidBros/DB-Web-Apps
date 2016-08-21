@@ -1,13 +1,32 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
+<%@page import="java.sql.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="java.sql.*"
+    pageEncoding="ISO-8859-1"%>
+    <% 
+    String tempString = (String) session.getAttribute("username");
+    System.out.println(tempString+" is username");
+    if(tempString==null ||tempString.equals("")){
+    	//String redirectURL = "/LoginModule/login.jsp";
+    	//response.sendRedirect(redirectURL);
+    	
+    	RequestDispatcher requestDispatcher; 
+		requestDispatcher = request.getRequestDispatcher("/login.jsp");
+		requestDispatcher.forward(request, response);
+    	
+    	System.out.println("KYS");
+    }else{
+    	System.out.println("why is this not null?????????????????????");
+    }
     %>
+    
     <%
     String passwordmessage = "";
 	String submit = request.getParameter("submit");
 
-	String username = "";
+	String username = (String) session.getAttribute("username");
+	System.out.println(session.getAttribute("username")+" is username");
+	
 	String password = "";
 	String retypepassword = "";
 	String firstname = "";
@@ -19,9 +38,44 @@
 	Boolean usernameMatches = false;
 	Boolean emailMatches = false;
 	//List<String> usernameList = new ArrayList<String>();
-
+	
+	try {
+			String connectionURL = "jdbc:mysql://localhost/kskdevelopers";
+			Connection connection = null;
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connection = DriverManager.getConnection(connectionURL, "kskdevelopers","mfsiablt");
+			if(!connection.isClosed()){
+				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+			}else{
+				System.out.println("Could not connect to " + "MySQL server using TCP/IP...");
+			}
+			Statement stmt = connection.createStatement();
+			
+			ResultSet rs = stmt.executeQuery("Select * from users");
+			
+			int resultNum = 0;
+			
+			while(rs.next()){
+				resultNum++;
+				System.out.println(rs.getString(1) + " is username " + resultNum);
+				if(username.equals(rs.getString(1))){
+					usernameMatches = true;
+					System.out.println("boolean is true now");
+					firstname=rs.getString(4);
+					lastname=rs.getString(5);
+					email=rs.getString(3);
+					birthdate=rs.getString(6);
+				}
+			}
+			
+			connection.close();
+		}
+		catch(SQLException e) {
+			System.out.println("SQLException caught: " +e.getMessage());
+		}
+	
 	if (submit != null) {
-		username = request.getParameter("username");
+		username = (String) session.getAttribute("username");
 		password = request.getParameter("password");
 		retypepassword = request.getParameter("retypepassword");
 		firstname = request.getParameter("firstname");
@@ -46,12 +100,6 @@
 			int resultNum = 0;
 			
 			while(rs.next()){
-				resultNum++;
-				System.out.println(rs.getString(1) + " is username " + resultNum);
-				if(username.equals(rs.getString(1))){
-					usernameMatches = true;
-					System.out.println("boolean is true now");
-				}
 				System.out.println(rs.getString(3) + " is email " + resultNum);
 				if(email.equals(rs.getString(3))){
 					emailMatches = true;
@@ -65,10 +113,7 @@
 			System.out.println("SQLException caught: " +e.getMessage());
 		}
 		
-		if(usernameMatches!= false){
 		
-			System.out.println("boolean is true");
-			
 		if (password.equals(retypepassword)) {
 
 			passwordmessage = "";
@@ -106,6 +151,8 @@
 					stmt.executeUpdate(sql);
 
 					connection.close();
+					String redirectURL = "/LoginModule/welcome.jsp";
+			    	response.sendRedirect(redirectURL);
 				} catch (SQLException e) {
 					System.out.println("SQLException caught: " + e.getMessage());
 				}
@@ -130,10 +177,7 @@
 		} else {
 			passwordmessage = "Password did not match!";
 		}
-		}else{
-			passwordmessage = "Username does not exist";
-			System.out.println("Boolean is true");
-		}
+		
 	}
      %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -163,7 +207,7 @@
 			</tr>
 			<tr>
 				<td>Username</td>
-				<td><input type="text" name="username" value="<%=username%>">
+				<td><%=username%>
 				</td>
 			</tr>
 			<tr>

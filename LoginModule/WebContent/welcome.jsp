@@ -13,7 +13,10 @@ if(session.getAttribute("username")==null || session.getAttribute("username").eq
 <title>Insert title here</title>
 </head>
 <body>
-	welcome
-	<%=session.getAttribute("username")%>
+	<h1>welcome
+	<%=session.getAttribute("username")%></h1>
+	<h2><a href="/LoginModule/logout.jsp">Logout</a></h2>
+	<h2><a href="/LoginModule/edit.jsp">Edit my details</a></h2>
+	
 </body>
 </html>

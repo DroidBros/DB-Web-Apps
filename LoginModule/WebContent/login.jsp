@@ -48,7 +48,9 @@
 </head>
 <body>
 
-<%out.print(session.getAttribute("username")); %>
+<%if(session.getAttribute("username")!=null){
+	out.print(session.getAttribute("username"));
+	} %>
 	<form method="post">
 		Username:<br> <input type="text" name="username"><br>
 		Password:<br> <input type="text" name="password"> <input
