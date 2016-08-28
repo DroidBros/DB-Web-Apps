@@ -6,26 +6,53 @@
     <% 
     String tempString = (String) session.getAttribute("username");
     System.out.println(tempString+" is username");
-    if(tempString==null ||tempString.equals("")){
-    	//String redirectURL = "/LoginModule/login.jsp";
-    	//response.sendRedirect(redirectURL);
-    	
-    	RequestDispatcher requestDispatcher; 
-		requestDispatcher = request.getRequestDispatcher("/login.jsp");
-		requestDispatcher.forward(request, response);
-    	
-    	System.out.println("KYS");
-    }else{
-    	System.out.println("why is this not null?????????????????????");
-    }
+    String tempToken = request.getParameter("token");
+    boolean passwordReset = false;
+	if(tempToken==null||tempToken.equals("")){
+		if(tempString==null ||tempString.equals("")){
+	    	//String redirectURL = "/LoginModule/login.jsp";
+	    	//response.sendRedirect(redirectURL);
+	    	RequestDispatcher requestDispatcher; 
+			requestDispatcher = request.getRequestDispatcher("/login.jsp");
+			requestDispatcher.forward(request, response);
+	    	}
+	}else{
+		passwordReset=true;
+	}
+    
     %>
     
     <%
     String passwordmessage = "";
 	String submit = request.getParameter("submit");
-
-	String username = (String) session.getAttribute("username");
-	System.out.println(session.getAttribute("username")+" is username");
+	String username = "";
+	
+	if(passwordReset==true){
+		String token = request.getParameter("token");
+		try{
+			
+			String connectionURL1 = "jdbc:mysql://localhost/kskdevelopers";
+			Connection connection1 = null;
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			connection1 = DriverManager.getConnection(connectionURL1, "kskdevelopers","mfsiablt");
+			Statement stmt1 = connection1.createStatement();
+			ResultSet rs1 = stmt1.executeQuery("Select * from password_recovery where token = " + token);
+			
+			if(rs1.next()){
+				username = rs1.getString(2);
+			}else{
+				System.out.println("F*** it didn't work, and by f*** I meant fail...");
+			}
+			
+			connection1.close();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}else{
+	username = (String) session.getAttribute("username");
+	}
+	System.out.println(username+" is username");
 	
 	String password = "";
 	String retypepassword = "";
