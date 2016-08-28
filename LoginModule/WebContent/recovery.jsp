@@ -66,11 +66,11 @@
 				SendMailSMTP MailObject = new SendMailSMTP();
 				try {
 					
-					messageText = "Hello "+ username +"!"+
-								  "To access your KSKDevelopers account, you can change your password through the link below:"+
-								  recoveryURL+
-								  " Your password will not be changed until you access the link above and create a new one."+
-								  "If you didn't request for this, please ignore this email."+
+					messageText = "Hello "+ username +"!<br>"+
+								  "To access your KSKDevelopers account, you can change your password through the link below: <br>"+
+								  recoveryURL+"<br>"+
+								  " Your password will not be changed until you access the link above and create a new one.<br>"+
+								  "If you didn't request for this, please ignore this email.<br>"+
 								  "With love, Your friends at KSKDevelopers";
 										  
 					MailObject.SendMail(messageText, subject, fromAddress, emailList);
