@@ -29,7 +29,7 @@
 		lastname = request.getParameter("lastname");
 		email = request.getParameter("email");
 		birthdate = request.getParameter("birthdate");
-
+		System.out.println("Birth "+birthdate);
 		try {
 			String connectionURL = "jdbc:mysql://localhost/kskdevelopers";
 			Connection connection = null;

@@ -27,8 +27,8 @@ public class SendMailSMTP {
 
 	private static final String SMTP_HOST_NAME = "smtpout.secureserver.net";
 	private static final String SMTP_PORT = "80";
-	private static final String SMTP_AUTH_USER = " ";
-	private static final String SMTP_AUTH_PWD = " ";
+	private static final String SMTP_AUTH_USER = "kskdevelopers@dietaway.com";
+	private static final String SMTP_AUTH_PWD = "mfsiablt";
 	private static final String SMTP_AUTH = "true";
 
 	public void SendMail(String htmlMmessage, String emailSubjectTxt, String emailFromAddress, String[] emailList,

@@ -1,4 +1,4 @@
-<%@page import="java.sql.*,com.kskdevelopers.mail.*"%>
+<%@page import="java.sql.*,com.kskdevelopers.mail.*,java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 
@@ -11,9 +11,33 @@
 	String fromAddress = "no-reply@rev-creations.com";
 	String messageText = "";
 	String recoveryURL = "";
-
+	
+	
 	if (submit != null) {
-
+		Random rand = new Random();
+		String token = "";
+		
+		int  ranNum = rand.nextInt(1000000000) ;
+		java.util.Date date = new java.util.Date();
+		java.util.Date expiration = date;
+		String expirationString;
+		
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		expiration.setDate(expiration.getDate()+1);
+		
+		expirationString = sdf.format(expiration);
+		
+		
+		long time = date.getTime();	
+				
+		token = time + "" + ranNum;
+		
+		System.out.println(date);
+		System.out.println("time " + time);
+		System.out.println("ranNum " + ranNum);
+		System.out.println("token " + token);
+		
 		email = request.getParameter("email");
 
 		try {
@@ -25,18 +49,27 @@
 			String sql = "SELECT username, email FROM users WHERE email = '" + email + "'";
 			
 			ResultSet rs = stmt.executeQuery(sql);
-
+			
 			String[] emailList = { email };
 
 			if (rs.next()) {
 				String username = rs.getString(1);
-				recoveryURL = "http://localhost:8080/LoginModule/edit.jsp";
+				
+				sql = "INSERT INTO password_recovery (username, token, expiration) VALUES( '"
+						+ username + "', '" + token + "', '" + expirationString + "' ) ";
+				
+				stmt.close();
+				stmt = connection.createStatement();
+				stmt.executeUpdate(sql);
+				
+				recoveryURL = "http://localhost:8080/LoginModule/edit.jsp?token=" + token;
 				SendMailSMTP MailObject = new SendMailSMTP();
 				try {
+					
 					messageText = "Hello "+ username +"!"+
 								  "To access your KSKDevelopers account, you can change your password through the link below:"+
 								  recoveryURL+
-								  "Your password will not be changed until you access the link above and create a new one."+
+								  " Your password will not be changed until you access the link above and create a new one."+
 								  "If you didn't request for this, please ignore this email."+
 								  "With love, Your friends at KSKDevelopers";
 										  
