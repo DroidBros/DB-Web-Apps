@@ -1,3 +1,6 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.DateFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="java.sql.*" %>
@@ -26,6 +29,7 @@
     String passwordmessage = "";
 	String submit = request.getParameter("submit");
 	String username = "";
+	String dateOfExpiry = "";
 	
 	if(passwordReset==true){
 		String token = request.getParameter("token");
@@ -40,12 +44,33 @@
 			
 			if(rs1.next()){
 				username = rs1.getString(2);
+				dateOfExpiry = rs1.getString(3);
 			}else{
 				System.out.println("F*** it didn't work, and by f*** I meant fail...");
 			}
 			
 			connection1.close();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+			String currentDateTime = dateFormat.format(date);
 			
+			String[] dateHours = currentDateTime.split(" ");
+			String dateHour = dateHours[0];
+			String[] hours = dateHour.split("-");
+			String currentHour = hours[2];
+			int currentHourInt = Integer.parseInt(currentHour);
+			
+			String[] expiryDateHours = dateOfExpiry.split(" ");
+			String expiryDateHour = expiryDateHours[0];
+			String[] expiryHours = expiryDateHour.split("-");
+			String expiryHour = expiryHours[2];
+			int expiryHourInt = Integer.parseInt(expiryHour);
+			
+			if(expiryHourInt>=currentHourInt){
+				RequestDispatcher requestDispatcher1; 
+				requestDispatcher1 = request.getRequestDispatcher("/login.jsp");
+				requestDispatcher1.forward(request, response);
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
