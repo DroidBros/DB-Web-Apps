@@ -11,13 +11,19 @@
     System.out.println(tempString+" is username");
     String tempToken = request.getParameter("token");
     boolean passwordReset = false;
+    boolean redirected = false;
+    
 	if(tempToken==null||tempToken.equals("")){
+    	System.out.println("token is null");
+
 		if(tempString==null ||tempString.equals("")){
 	    	//String redirectURL = "/LoginModule/login.jsp";
 	    	//response.sendRedirect(redirectURL);
+	    	System.out.println("Redirected from beginning of code");
 	    	RequestDispatcher requestDispatcher; 
 			requestDispatcher = request.getRequestDispatcher("/login.jsp");
 			requestDispatcher.forward(request, response);
+			redirected = true;
 	    	}
 	}else{
 		passwordReset=true;
@@ -31,6 +37,15 @@
 	String username = "";
 	String dateOfExpiry = "";
 	
+	String password = "";
+	String retypepassword = "";
+	String firstname = "";
+	String lastname = "";
+	String email = "";
+	String birthdate = "";
+	String usertype = "";
+	
+	if(redirected!=true){
 	if(passwordReset==true){
 		String token = request.getParameter("token");
 		try{
@@ -56,18 +71,45 @@
 			
 			String[] dateHours = currentDateTime.split(" ");
 			String dateHour = dateHours[0];
-			String[] hours = dateHour.split("-");
-			String currentHour = hours[2];
-			int currentHourInt = Integer.parseInt(currentHour);
+			String[] days = dateHour.split("-");
+			String currentDay = days[2];
+			String currentMonth = days[1];
+			String currentYear = days[0];
+			int currentDayInt = Integer.parseInt(currentDay);
+			int currentMonthInt = Integer.parseInt(currentMonth);
+			int currentYearInt = Integer.parseInt(currentYear);
+			System.out.println(currentDayInt + " is currentdayint");
 			
 			String[] expiryDateHours = dateOfExpiry.split(" ");
 			String expiryDateHour = expiryDateHours[0];
-			String[] expiryHours = expiryDateHour.split("-");
-			String expiryHour = expiryHours[2];
-			int expiryHourInt = Integer.parseInt(expiryHour);
+			String[] expiryDates = expiryDateHour.split("-");
+			String expiryDay = expiryDates[2];
+			String expiryMonth = expiryDates[1];
+			String expiryYear = expiryDates[0];
+			int expiryDayInt = Integer.parseInt(expiryDay);
+			int expiryMonthInt = Integer.parseInt(expiryMonth);
+			int expiryYearInt = Integer.parseInt(expiryYear);
+			System.out.println(expiryDayInt + " is expirydayint");
 			
-			if(expiryHourInt>=currentHourInt){
-				RequestDispatcher requestDispatcher1; 
+			
+			if(expiryYearInt==currentYearInt){
+				if(expiryMonthInt==currentMonthInt){
+			
+					if(expiryDayInt<=currentDayInt){
+						System.out.println("Redirected because of expiry");
+						RequestDispatcher requestDispatcher1;
+						requestDispatcher1 = request.getRequestDispatcher("/login.jsp");
+						requestDispatcher1.forward(request, response);
+						}
+				}
+				if(expiryMonthInt<currentMonthInt){
+					RequestDispatcher requestDispatcher1;
+					requestDispatcher1 = request.getRequestDispatcher("/login.jsp");
+					requestDispatcher1.forward(request, response);
+				}
+			} 
+			if(expiryYearInt<currentYearInt){
+				RequestDispatcher requestDispatcher1;
 				requestDispatcher1 = request.getRequestDispatcher("/login.jsp");
 				requestDispatcher1.forward(request, response);
 			}
@@ -78,14 +120,6 @@
 	username = (String) session.getAttribute("username");
 	}
 	System.out.println(username+" is username");
-	
-	String password = "";
-	String retypepassword = "";
-	String firstname = "";
-	String lastname = "";
-	String email = "";
-	String birthdate = "";
-	String usertype = "";
 	
 	Boolean usernameMatches = false;
 	Boolean emailMatches = false;
@@ -117,6 +151,7 @@
 					lastname=rs.getString(5);
 					email=rs.getString(3);
 					birthdate=rs.getString(6);
+					System.out.println("birthdate is "+birthdate);
 				}
 			}
 			
@@ -230,7 +265,7 @@
 			passwordmessage = "Password did not match!";
 		}
 		
-	}
+	}}
      %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -287,7 +322,7 @@
 			</tr>
 			<tr>
 				<td>Birth Date</td>
-				<td><input type="date" name="birthdate"></td>
+				<td><input type="date" name="birthdate" value=<%=birthdate%>></td>
 			</tr>
 			<tr>
 				<td><br></td>

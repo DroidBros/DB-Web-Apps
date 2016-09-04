@@ -107,6 +107,9 @@
 					stmt.executeUpdate(sql);
 
 					connection.close();
+					
+					String redirectURL = "/LoginModule/login.jsp";
+			    	response.sendRedirect(redirectURL);
 				} catch (SQLException e) {
 					System.out.println("SQLException caught: " + e.getMessage());
 				}
