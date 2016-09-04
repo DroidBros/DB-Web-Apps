@@ -53,8 +53,10 @@
 	} %>
 	<form method="post">
 		Username:<br> <input type="text" name="username"><br>
-		Password:<br> <input type="text" name="password"> 
+		Password:<br> <input type="password" name="password"> 
 		<input type="submit" name="submit">
 	</form>
+	<h2><a href="/LoginModule/registration.jsp">Don't have an account? Sign up.</a></h2>
+	<h2><a href="/LoginModule/recovery.jsp">Forgot Password</a></h2>
 </body>
 </html>

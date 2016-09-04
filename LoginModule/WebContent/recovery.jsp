@@ -24,7 +24,8 @@
 		
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
-		expiration.setDate(expiration.getDate()+1);
+		//expiration.setDate(expiration.getDate()+1);
+		expiration.setMinutes(expiration.getMinutes()+5);
 		expirationString = sdf.format(expiration);
 		
 		
