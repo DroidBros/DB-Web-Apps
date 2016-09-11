@@ -1,3 +1,8 @@
+<%@page import="java.io.File"%>
+<%@page import="java.io.FileInputStream"%>
+<%@page import="java.io.FileNotFoundException"%>
+<%@page import="java.io.InputStream"%>
+<%@page import="java.util.Properties"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.DateFormat"%>
@@ -7,6 +12,47 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <% 
+    String databaseUsername = "";
+    String databasePassword = "";
+    String databaseName = "";
+    String databaseHost = "";
+    String databasePort = "";
+    InputStream inputStream = null;
+    try {
+    	Properties prop = new Properties();
+    
+    	String propFileName = System.getProperty("ConfigFile");
+    	System.out.println("propFileName : "+propFileName);
+    	
+    	File file = new File(System.getProperty("ConfigFile"));
+    	inputStream = new FileInputStream(file);
+		
+    	//inputStream = getClass().getResourceAsStream("C:/eclipse4_5workspace/git/DB-Web-Apps/LoginModule/Release/config.properties");
+    	
+    	prop.load(inputStream);
+    	
+    	if(inputStream != null){
+    		prop.load(inputStream);
+    		
+    	}else{
+    		//throw new FileNotFoundException("property file '"+propFileName+"' not found in the classpath");
+    	}
+    	databaseUsername = prop.getProperty("databaseUsername");
+    	databasePassword = prop.getProperty("databasePassword");
+    	databaseName = prop.getProperty("databaseName");
+    	databaseHost = prop.getProperty("databaseHost");
+    	databasePort = prop.getProperty("databasePort");
+    }catch(Exception e){
+    	e.printStackTrace();
+    } finally{
+    	if(inputStream!=null)
+    	{
+    		inputStream.close();
+    	}
+    }
+    
+    System.out.println("databaseUsername: "+databaseUsername);
+    
     String tempString = (String) session.getAttribute("username");
     System.out.println(tempString+" is username");
     String tempToken = request.getParameter("token");
@@ -50,10 +96,10 @@
 		String token = request.getParameter("token");
 		try{
 			
-			String connectionURL1 = "jdbc:mysql://localhost/kskdevelopers";
+			String connectionURL1 = "jdbc:mysql://"+ databaseHost +"/"+databaseName;
 			Connection connection1 = null;
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			connection1 = DriverManager.getConnection(connectionURL1, "kskdevelopers","mfsiablt");
+			connection1 = DriverManager.getConnection(connectionURL1, databaseUsername,databasePassword);
 			Statement stmt1 = connection1.createStatement();
 			ResultSet rs1 = stmt1.executeQuery("Select * from password_recovery where token = " + token);
 			
@@ -61,7 +107,7 @@
 				username = rs1.getString(2);
 				dateOfExpiry = rs1.getString(3);
 			}else{
-				System.out.println("F*** it didn't work, and by f*** I meant fail...");
+				System.out.println("F*** it didn't work, and by f*** I mean fail ;)");
 			}
 			
 			connection1.close();
@@ -126,10 +172,10 @@
 	//List<String> usernameList = new ArrayList<String>();
 	
 	try {
-			String connectionURL = "jdbc:mysql://localhost/kskdevelopers";
+			String connectionURL = "jdbc:mysql://"+ databaseHost +"/"+databaseName;
 			Connection connection = null;
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			connection = DriverManager.getConnection(connectionURL, "kskdevelopers","mfsiablt");
+			connection = DriverManager.getConnection(connectionURL, databaseUsername,databasePassword);
 			if(!connection.isClosed()){
 				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
 			}else{
@@ -171,10 +217,10 @@
 		birthdate = request.getParameter("birthdate");
 
 		try {
-			String connectionURL = "jdbc:mysql://localhost/kskdevelopers";
+			String connectionURL = "jdbc:mysql://"+ databaseHost +"/"+databaseName;
 			Connection connection = null;
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			connection = DriverManager.getConnection(connectionURL, "kskdevelopers", "mfsiablt");
+			connection = DriverManager.getConnection(connectionURL, databaseUsername, databasePassword);
 			if(!connection.isClosed()){
 				System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
 			}else{
@@ -222,10 +268,10 @@
 				passwordmessage = "";
 				
 				try {
-					String connectionURL = "jdbc:mysql://localhost/kskdevelopers";
+					String connectionURL = "jdbc:mysql://"+ databaseHost +"/"+databaseName;
 					Connection connection = null;
 					Class.forName("com.mysql.jdbc.Driver").newInstance();
-					connection = DriverManager.getConnection(connectionURL, "kskdevelopers", "mfsiablt");
+					connection = DriverManager.getConnection(connectionURL, databaseUsername, databasePassword);
 					if(!connection.isClosed()){
 						System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
 					}else{
